@@ -5,13 +5,19 @@
  */
 package frt.utn.solydar.modelo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -34,7 +40,10 @@ public class Usuario {
     
     @OneToOne(mappedBy = "usuario",cascade = CascadeType.ALL)
     private Ciudadano ciudadano;
-
+    
+    @ManyToMany(mappedBy = "usuarios",fetch=FetchType.LAZY,cascade = {CascadeType.DETACH,CascadeType.MERGE,CascadeType.PERSIST,CascadeType.REFRESH})
+    private List<Perfil> perfiles;
+    
     public Usuario() {
     }
 
@@ -43,14 +52,34 @@ public class Usuario {
         this.passwordUsuario = passwordUsuario;
     }
 
-    public Usuario(Long idUsuario, String emailUsuario, String passwordUsuario) {
-        this.idUsuario = idUsuario;
-        this.emailUsuario = emailUsuario;
-        this.passwordUsuario = passwordUsuario;
+    
+    
+    public void agregarPerfil(Perfil perfil) {
+    	if(perfiles == null) {
+    		perfiles = new ArrayList<Perfil>();
+    	}
+    	perfiles.add(perfil);
+    	//perfil.setUsuarios(this);
     }
 
     
-    public Long getIdUsuario() {
+    public Ciudadano getCiudadano() {
+		return ciudadano;
+	}
+
+	public void setCiudadano(Ciudadano ciudadano) {
+		this.ciudadano = ciudadano;
+	}
+
+	public List<Perfil> getPerfiles() {
+		return perfiles;
+	}
+
+	public void setPerfiles(List<Perfil> perfiles) {
+		this.perfiles = perfiles;
+	}
+
+	public Long getIdUsuario() {
         return idUsuario;
     }
 

@@ -6,6 +6,7 @@
 package frt.utn.solydar.controlador;
 
 
+import frt.utn.solydar.modelo.Ciudadano;
 import frt.utn.solydar.modelo.Usuario;
 
 import frt.utn.solydar.error.UsuarioNotFoundException;
@@ -74,11 +75,13 @@ CollectionModel<EntityModel<Usuario>> all() {
 @PostMapping("/usuario")
 ResponseEntity<?> newUsuario(@RequestBody Usuario newUsuario) {
 
-  EntityModel<Usuario> entityModel = assembler.toModel(repository.save(newUsuario));
-
-  return ResponseEntity //
-      .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
-      .body(entityModel);
+	Ciudadano ciudadano = new Ciudadano();
+	newUsuario.setCiudadano(ciudadano);
+	EntityModel<Usuario> entityModel = assembler.toModel(repository.save(newUsuario));
+	
+	return ResponseEntity //
+	  .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
+	  .body(entityModel);
 }
     
 @PutMapping("/usuario/{id}")

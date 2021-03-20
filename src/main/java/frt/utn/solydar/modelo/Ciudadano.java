@@ -26,19 +26,19 @@ public class Ciudadano {
     private String nombreCiudadano;
    
     @Column(name="telefono_ciudadano")
-    private int telefono;
+    private String telefono;
     
     @Column(name="perfil_face_ciudadano")
     private String perfilFace;
     
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="idUsuario")
+    @JoinColumn(name="id_usuario")
     private Usuario usuario;
 
     public Ciudadano() {
     }
 
-    public Ciudadano(String nombreCiudadano, int telefono, String perfilFace) {
+    public Ciudadano(String nombreCiudadano, String telefono, String perfilFace) {
         this.nombreCiudadano = nombreCiudadano;
         this.telefono = telefono;
         this.perfilFace = perfilFace;
@@ -61,16 +61,18 @@ public class Ciudadano {
     public void setNombreCiudadano(String nombreCiudadano) {
         this.nombreCiudadano = nombreCiudadano;
     }
+   
+  
+    
+	public String getTelefono() {
+		return telefono;
+	}
 
-    public int getTelefono() {
-        return telefono;
-    }
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
 
-    public void setTelefono(int telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getPerfilFace() {
+	public String getPerfilFace() {
         return perfilFace;
     }
 
@@ -86,46 +88,57 @@ public class Ciudadano {
         this.usuario = usuario;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 3;
-        hash = 67 * hash + Objects.hashCode(this.idCiudadano);
-        hash = 67 * hash + Objects.hashCode(this.nombreCiudadano);
-        hash = 67 * hash + this.telefono;
-        hash = 67 * hash + Objects.hashCode(this.perfilFace);
-        hash = 67 * hash + Objects.hashCode(this.usuario);
-        return hash;
-    }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((idCiudadano == null) ? 0 : idCiudadano.hashCode());
+		result = prime * result + ((nombreCiudadano == null) ? 0 : nombreCiudadano.hashCode());
+		result = prime * result + ((perfilFace == null) ? 0 : perfilFace.hashCode());
+		result = prime * result + ((telefono == null) ? 0 : telefono.hashCode());
+		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
+		return result;
+	}
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null) {
-            return false;
-        }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Ciudadano other = (Ciudadano) obj;
-        if (this.telefono != other.telefono) {
-            return false;
-        }
-        if (!Objects.equals(this.nombreCiudadano, other.nombreCiudadano)) {
-            return false;
-        }
-        if (!Objects.equals(this.perfilFace, other.perfilFace)) {
-            return false;
-        }
-        if (!Objects.equals(this.idCiudadano, other.idCiudadano)) {
-            return false;
-        }
-        if (!Objects.equals(this.usuario, other.usuario)) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Ciudadano other = (Ciudadano) obj;
+		if (idCiudadano == null) {
+			if (other.idCiudadano != null)
+				return false;
+		} else if (!idCiudadano.equals(other.idCiudadano))
+			return false;
+		if (nombreCiudadano == null) {
+			if (other.nombreCiudadano != null)
+				return false;
+		} else if (!nombreCiudadano.equals(other.nombreCiudadano))
+			return false;
+		if (perfilFace == null) {
+			if (other.perfilFace != null)
+				return false;
+		} else if (!perfilFace.equals(other.perfilFace))
+			return false;
+		if (telefono == null) {
+			if (other.telefono != null)
+				return false;
+		} else if (!telefono.equals(other.telefono))
+			return false;
+		if (usuario == null) {
+			if (other.usuario != null)
+				return false;
+		} else if (!usuario.equals(other.usuario))
+			return false;
+		return true;
+	}
+
+    
+
     
     
     

@@ -73,16 +73,18 @@ CollectionModel<EntityModel<Ciudadano>> all() {
 @PostMapping("/ciudadano")
 ResponseEntity<?> newCiudadano(@RequestBody Ciudadano newCiudadano) {
 
-  EntityModel<Ciudadano> entityModel = assembler.toModel(repository.save(newCiudadano));
+	Usuario usuario = new Usuario();
+	newCiudadano.setUsuario(usuario);
+	EntityModel<Ciudadano> entityModel = assembler.toModel(repository.save(newCiudadano));
 
-  return ResponseEntity //
+	return ResponseEntity //
       .created(entityModel.getRequiredLink(IanaLinkRelations.SELF).toUri()) //
       .body(entityModel);
 }
 
 @PostMapping("/insertarUsuarioCiudadano")
 ResponseEntity<?> newUsuarioCiudadano(@RequestBody Ciudadano newCiudadano,@RequestBody Usuario newUsuario){
-    
+    //nombre,telefono,perfilFace,email,password
     newCiudadano.setUsuario(newUsuario);
     
     EntityModel<Ciudadano> entityModel = assembler.toModel(repository.save(newCiudadano));
